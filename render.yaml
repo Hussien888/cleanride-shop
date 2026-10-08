@@ -1,0 +1,42 @@
+# Render-Blueprint: Auf render.com "New → Blueprint" wählen, dein GitHub-Repository auswählen – fertig.
+# Render fragt dann nach den Werten, die unten mit "sync: false" markiert sind.
+services:
+  - type: web
+    name: cleanride-shop
+    runtime: docker
+    region: frankfurt        # EU-Standort (DSGVO), lässt sich später nicht mehr ändern
+    plan: starter            # Plan mit dauerhaftem Datenträger (der kostenlose Plan hat keinen)
+    healthCheckPath: /api/health
+    autoDeploy: true
+    disk:
+      name: cleanride-shop-daten
+      mountPath: /data       # hier liegt die Datenbank
+      sizeGB: 1
+    envVars:
+      - { key: NODE_ENV, value: production }
+      - { key: DATA_DIR, value: /data }
+      - { key: TRUST_PROXY, value: "1" }
+      - { key: SEED_DEMO, value: "false" }
+      - { key: SHOP_READY, value: "false" }
+      - { key: SHOP_PRICE_CENTS, value: "3490" }
+      - { key: SHOP_SHIPPING_CENTS, value: "490" }
+      - { key: JWT_SECRET, generateValue: true }
+      # --- Dein Admin-Zugang (nur du kennst ihn) ---
+      - { key: ADMIN_EMAIL, sync: false }
+      - { key: ADMIN_PASSWORD, sync: false }
+      # --- Pflichtangaben für Impressum und Datenschutz ---
+      - { key: LEGAL_NAME, sync: false }
+      - { key: LEGAL_STREET, sync: false }
+      - { key: LEGAL_CITY, sync: false }
+      - { key: LEGAL_EMAIL, sync: false }
+      - { key: HOSTING_PROVIDER, value: "Render Services, Inc. (Serverstandort Frankfurt am Main)" }
+      # --- E-Mail-Versand (Benachrichtigungen, Passwort vergessen) ---
+      - { key: SMTP_HOST, sync: false }
+      - { key: SMTP_PORT, value: "587" }
+      - { key: SMTP_USER, sync: false }
+      - { key: SMTP_PASS, sync: false }
+      - { key: MAIL_FROM, sync: false }
+      - { key: MAIL_PROVIDER, sync: false }
+      # --- Zahlung (Stripe Checkout) ---
+      - { key: STRIPE_SECRET_KEY, sync: false }
+      - { key: STRIPE_WEBHOOK_SECRET, sync: false }

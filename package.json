@@ -1,0 +1,27 @@
+{
+  "name": "cleanride-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CLEANRIDE – professioneller Single-Product-Shop mit Stripe Checkout, Bestellungen und SQLite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --no-warnings --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^11.8.1",
+    "compression": "^1.7.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.10.0",
+    "stripe": "^17.7.0"
+  }
+}
